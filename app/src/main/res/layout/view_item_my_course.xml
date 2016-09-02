@@ -5,7 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="center"
-    android:layout_margin="8dp"
+    android:layout_marginTop="8dp"
+    android:layout_marginLeft="8dp"
+    android:layout_marginRight="8dp"
     card_view:cardCornerRadius="4dp">
 
     <LinearLayout
@@ -16,7 +18,7 @@
         android:paddingLeft="@dimen/margin_medium"
         android:paddingBottom="@dimen/margin_medium_2">
 
-        <net.naylinaung.appdesign.components.SquaredFrameLayout
+        <FrameLayout
             android:id="@+id/vImageRoot"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -29,24 +31,24 @@
                 android:paddingBottom="32dp"
                 android:layout_marginTop="@dimen/margin_medium"
                 android:background="#aed582"
-                android:src="@drawable/terrace_2" />
+                android:src="@drawable/co_terrace" />
 
             <View
                 android:id="@+id/vBgLike"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:background="@drawable/bg_like_circle_background"
                 android:visibility="gone" />
 
             <ImageView
                 android:id="@+id/ivLike"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:scaleType="center"
                 android:src="@drawable/ic_touch_outline_white"
                 android:visibility="gone" />
 
-        </net.naylinaung.appdesign.components.SquaredFrameLayout>
+        </FrameLayout>
 
         <net.naylinaung.appdesign.components.MMTextView
             android:id="@+id/tv_category_name"
@@ -84,10 +86,11 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="@dimen/margin_medium"
+            android:layout_marginBottom="@dimen/margin_medium_2"
             android:text="5 min - Admin Team"
             android:drawableLeft="@drawable/ic_query_builder_24dp"
             android:drawablePadding="@dimen/margin_small"
-            android:textSize="@dimen/text_regular"
+            android:textSize="@dimen/text_small"
             android:textColor="@color/secondary_text"
             />
 

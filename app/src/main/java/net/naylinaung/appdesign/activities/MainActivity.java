@@ -17,7 +17,11 @@ import android.widget.Toast;
 
 import net.naylinaung.appdesign.R;
 import net.naylinaung.appdesign.adapters.MyCourseAdapter;
+import net.naylinaung.appdesign.data.vos.CourseVO;
 import net.naylinaung.appdesign.utils.ScreenUtils;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -62,45 +66,46 @@ public class MainActivity extends BaseActivity {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
-        setupFeed();
+        setupMyCourse();
 
         if (savedInstanceState == null) {
             pendingIntroAnimation = true;
             prepareIntroAnimation();
         } else {
-            myCourseAdapter.updateItems(false);
+            myCourseAdapter.updateItems(false, new ArrayList<CourseVO>());
         }
 
     }
 
-    private void setupFeed() {
+    private void setupMyCourse() {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this) {
             @Override
             protected int getExtraLayoutSpace(RecyclerView.State state) {
                 return 300;
             }
         };
+
+        myCourseAdapter = new MyCourseAdapter(new ArrayList<CourseVO>(), this);
+        rvMyCourse.setAdapter(myCourseAdapter);
         rvMyCourse.setLayoutManager(linearLayoutManager);
 
-        myCourseAdapter = new MyCourseAdapter(this);
-//        myCourseAdapter.setOnFeedItemClickListener(this);
-        rvMyCourse.setAdapter(myCourseAdapter);
-        rvMyCourse.setOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-//                FeedContextMenuManager.getInstance().onScrolled(recyclerView, dx, dy);
-            }
-        });
+//        rvMyCourse.setOnScrollListener(new RecyclerView.OnScrollListener() {
+//            @Override
+//            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+////                FeedContextMenuManager.getInstance().onScrolled(recyclerView, dx, dy);
+//            }
+//        });
     }
 
     private void prepareIntroAnimation() {
+        fabSearch.setTranslationY(2 * getResources().getDimensionPixelOffset(R.dimen.btn_fab_size));
         getToolbar().setTranslationY(-ACTION_BAR_SIZE);
         getScreenTitle().setTranslationY(-ACTION_BAR_SIZE);
 
     }
 
     private void startIntroAnimation() {
-        fabSearch.setTranslationY(2 * getResources().getDimensionPixelOffset(R.dimen.btn_fab_size));
+
         getInboxMenuItem().getActionView().setTranslationY(-ACTION_BAR_SIZE);
 
         getToolbar().animate()
@@ -132,7 +137,7 @@ public class MainActivity extends BaseActivity {
                 .setDuration(ANIM_DURATION_FAB)
                 .start();
 
-//        myCourseAdapter.updateItems(true);
+        myCourseAdapter.updateItems(true, prepareSampleCourseList());
     }
 
     @Override
@@ -165,5 +170,38 @@ public class MainActivity extends BaseActivity {
 
     public void showLikedSnackbar() {
         Snackbar.make(clContent, "Liked!", Snackbar.LENGTH_SHORT).show();
+    }
+
+    public List<CourseVO> prepareSampleCourseList() {
+        List<CourseVO> courseList = new ArrayList<>();
+
+        CourseVO courseOne = new CourseVO();
+        courseOne.setTitle("UV ေရာင္ျခည္ကို ဘယ္လိုကာကြယ္မလဲ");
+        courseOne.setCategoryName("LifeStyle");
+        courseOne.setDurationInMinute(15);
+        courseOne.setAuthorName("Admin Team");
+        courseOne.setColorCode("#aed582");
+        courseOne.setImageUrl("co_terrace.png");
+        courseList.add(courseOne);
+
+        CourseVO courseTwo = new CourseVO();
+        courseTwo.setTitle("အားကစားကို နည္းမွန္လမ္းမွန္ ျပဳလုပ္နည္းမ်ား");
+        courseTwo.setCategoryName("Sports and Fitness");
+        courseTwo.setDurationInMinute(15);
+        courseTwo.setAuthorName("Admin Team");
+        courseTwo.setColorCode("#81c683");
+        courseOne.setImageUrl("co_runner.png");
+        courseList.add(courseTwo);
+
+        CourseVO courseThree = new CourseVO();
+        courseThree.setTitle("C# အသံုးျပဳ Console Application တစ္ခု ဘယ္လိုတည္ေဆာက္မလဲ");
+        courseThree.setCategoryName("Programming");
+        courseThree.setDurationInMinute(10);
+        courseThree.setAuthorName("Admin Team");
+        courseThree.setColorCode("#25c6da");
+        courseOne.setImageUrl("co_terrace.png");
+        courseList.add(courseThree);
+
+        return courseList;
     }
 }

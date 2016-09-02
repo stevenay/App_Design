@@ -5,6 +5,8 @@
     <color name="colorAccent">#01bcd5</color>
 
     <color name="menuPrimary">#2f4050</color>
+    <!-- Primer Primary Color #536e79 -->
+    <color name="homeBackground">#273a4a</color>
 
     <color name="primary">#03A9F4</color>
     <color name="primary_dark">#0288D1</color>

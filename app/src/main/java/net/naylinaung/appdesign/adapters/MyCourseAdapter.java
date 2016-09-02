@@ -23,10 +23,13 @@ import android.widget.TextView;
 import net.naylinaung.appdesign.R;
 import net.naylinaung.appdesign.activities.MainActivity;
 import net.naylinaung.appdesign.components.SendingProgressView;
+import net.naylinaung.appdesign.data.vos.CourseVO;
 import net.naylinaung.appdesign.utils.ScreenUtils;
+import net.naylinaung.appdesign.views.holders.MyCourseViewHolder;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
@@ -36,7 +39,7 @@ import butterknife.ButterKnife;
 /**
  * Created by Dell on 9/1/2016.
  */
-public class MyCourseAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements View.OnClickListener {
+public class MyCourseAdapter extends RecyclerView.Adapter<MyCourseViewHolder> implements View.OnClickListener {
 
     private static final int VIEW_TYPE_DEFAULT = 1;
     private static final int VIEW_TYPE_LOADER = 2;
@@ -45,7 +48,7 @@ public class MyCourseAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     private static final AccelerateInterpolator ACCELERATE_INTERPOLATOR = new AccelerateInterpolator();
     private static final OvershootInterpolator OVERSHOOT_INTERPOLATOR = new OvershootInterpolator(4);
 
-    private static final int ANIMATED_ITEMS_COUNT = 2;
+    private static final int ANIMATED_ITEMS_COUNT = 3;
 
     private Context context;
     private int lastAnimatedPosition = -1;
@@ -61,20 +64,20 @@ public class MyCourseAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     private boolean showLoadingView = false;
     private int loadingViewSize = ScreenUtils.dpToPx(200);
 
-    public MyCourseAdapter(Context context) {
+    private List<CourseVO> mCourseList;
+
+    public MyCourseAdapter(List<CourseVO> courseList, Context context) {
         this.context = context;
+        this.mCourseList = courseList;
     }
 
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public MyCourseViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         final View view = LayoutInflater.from(context).inflate(R.layout.view_item_my_course, parent, false);
         final MyCourseViewHolder cellFeedViewHolder = new MyCourseViewHolder(view);
+
         if (viewType == VIEW_TYPE_DEFAULT) {
-//            cellFeedViewHolder.btnComments.setOnClickListener(this);
-//            cellFeedViewHolder.btnMore.setOnClickListener(this);
-//            cellFeedViewHolder.ivFeedCenter.setOnClickListener(this);
-//            cellFeedViewHolder.btnLike.setOnClickListener(this);
-//            cellFeedViewHolder.ivUserProfile.setOnClickListener(this);
+
         } else if (viewType == VIEW_TYPE_LOADER) {
             View bgView = new View(context);
             bgView.setLayoutParams(new FrameLayout.LayoutParams(
@@ -113,28 +116,26 @@ public class MyCourseAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
+    public void onBindViewHolder(MyCourseViewHolder viewHolder, int position) {
         runEnterAnimation(viewHolder.itemView, position);
-        final MyCourseViewHolder holder = (MyCourseViewHolder) viewHolder;
-        if (getItemViewType(position) == VIEW_TYPE_DEFAULT) {
-            bindDefaultMyCourse(position, holder);
-        } else if (getItemViewType(position) == VIEW_TYPE_LOADER) {
-            bindLoadingMyCourse(holder);
-        }
+        final MyCourseViewHolder holder = viewHolder;
+
+        viewHolder.bindData(this.mCourseList.get(position));
+//        if (getItemViewType(position) == VIEW_TYPE_DEFAULT) {
+//            bindDefaultMyCourse(position, holder);
+//        } else if (getItemViewType(position) == VIEW_TYPE_LOADER) {
+//            bindLoadingMyCourse(holder);
+//        }
     }
 
     private void bindDefaultMyCourse(int position, MyCourseViewHolder holder) {
         updateLikesCounter(holder, false);
         updateHeartButton(holder, false);
 
-//        holder.btnComments.setTag(position);
-//        holder.btnMore.setTag(position);
-//        holder.ivFeedCenter.setTag(holder);
-//        holder.btnLike.setTag(holder);
-
         if (likeAnimations.containsKey(holder)) {
             likeAnimations.get(holder).cancel();
         }
+
         resetLikeAnimationState(holder);
     }
 
@@ -180,11 +181,12 @@ public class MyCourseAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     @Override
     public int getItemCount() {
-        return itemsCount;
+        return mCourseList.size();
     }
 
     private void updateLikesCounter(MyCourseViewHolder holder, boolean animated) {
-        int currentLikesCount = likesCount.get(holder.getPosition()) + 1;
+//        int currentLikesCount = likesCount.get(holder.getPosition()) + 1;
+        int currentLikesCount = 128;
         String likesCountText = context.getResources().getQuantityString(
                 R.plurals.likes_count, currentLikesCount, currentLikesCount
         );
@@ -341,11 +343,13 @@ public class MyCourseAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         holder.ivLike.setVisibility(View.GONE);
     }
 
-    public void updateItems(boolean animated) {
-        itemsCount = 10;
+    public void updateItems(boolean animated, List<CourseVO> courseList) {
+        this.mCourseList = courseList;
         animateItems = animated;
         fillLikesWithRandomValues();
-        notifyDataSetChanged();
+
+        if (courseList.size() > 0)
+            notifyDataSetChanged();
     }
 
     private void fillLikesWithRandomValues() {
@@ -363,49 +367,7 @@ public class MyCourseAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         notifyItemChanged(0);
     }
 
-    public static class MyCourseViewHolder extends RecyclerView.ViewHolder {
-        @BindView(R.id.iv_course_cover_image)
-        ImageView ivCourseCoverImage;
 
-        @BindView(R.id.tv_category_name)
-        TextView tvCategoryName;
-
-        @BindView(R.id.tv_course_title)
-        TextView tvCourseTitle;
-
-        @BindView(R.id.tv_duration)
-        TextView tvDuration;
-
-        @BindView(R.id.vImageRoot)
-        FrameLayout vImageRoot;
-
-        @BindView(R.id.btnComments)
-        ImageButton btnComments;
-
-        @BindView(R.id.btnLike)
-        ImageButton btnLike;
-
-        @BindView(R.id.btnMore)
-        ImageButton btnMore;
-
-        @BindView(R.id.vBgLike)
-        View vBgLike;
-
-        @BindView(R.id.ivLike)
-        ImageView ivLike;
-
-        @BindView(R.id.tsLikesCounter)
-        TextSwitcher tsLikesCounter;
-
-        SendingProgressView vSendingProgress;
-        View vProgressBg;
-
-        public MyCourseViewHolder(View view) {
-            super(view);
-            ButterKnife.bind(this, view);
-        }
-
-    }
 
     public interface OnFeedItemClickListener {
         void onCommentsClick(View v, int position);
