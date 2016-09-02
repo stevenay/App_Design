@@ -8,6 +8,7 @@
     android:fitsSystemWindows="true">
 
     <android.support.design.widget.CoordinatorLayout
+        android:id="@+id/content"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fitsSystemWindows="true"
@@ -24,6 +25,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/menuPrimary"
+                app:elevation="@dimen/default_elevation"
+                app:layout_scrollFlags="scroll|enterAlways"
+                app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
                 app:popupTheme="@style/AppTheme.PopupOverlay">
 
                 <LinearLayout
@@ -34,9 +38,9 @@
 
                     <net.naylinaung.appdesign.components.MMTextView
                         android:id="@+id/tv_screen_title"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:gravity="center_horizontal"
+                        android:layout_gravity="center_horizontal"
                         android:layout_marginLeft="@dimen/margin_medium"
                         android:layout_marginTop="@dimen/margin_medium"
                         android:text="@string/home_screen_title"
@@ -45,9 +49,9 @@
 
                     <net.naylinaung.appdesign.components.MMTextView
                         android:id="@+id/tv_screen_small_title"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:gravity="center_horizontal"
+                        android:layout_gravity="center_horizontal"
                         android:layout_marginLeft="@dimen/margin_medium"
                         android:text="@string/home_screen_small_title"
                         android:textColor="@color/white_full"
@@ -67,11 +71,12 @@
             <!--app:layout_behavior="@string/appbar_scrolling_view_behavior" />-->
 
         <android.support.v7.widget.RecyclerView
-            android:id="@+id/rvFeed"
+            android:id="@+id/rvMyCourse"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@id/toolbar"
-            android:scrollbars="none" />
+            android:scrollbars="none"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
 
         <android.support.design.widget.FloatingActionButton
