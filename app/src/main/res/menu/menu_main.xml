@@ -12,7 +12,7 @@
     <item
         android:id="@+id/action_profile"
         android:title="@string/action_settings"
-        android:icon="@drawable/circled_user_male_96"
+        android:icon="@drawable/ic_circled_user_male_96"
         app:showAsAction="always" />
 
 </menu>

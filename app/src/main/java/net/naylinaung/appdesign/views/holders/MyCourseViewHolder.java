@@ -1,5 +1,6 @@
 package net.naylinaung.appdesign.views.holders;
 
+import android.support.v7.widget.RecyclerView;
 import android.content.Context;
 import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
@@ -13,6 +14,7 @@ import android.widget.TextView;
 import net.naylinaung.appdesign.R;
 import net.naylinaung.appdesign.components.SendingProgressView;
 import net.naylinaung.appdesign.data.vos.CourseVO;
+import net.naylinaung.appdesign.views.items.LoadingCourseItemView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -56,9 +58,20 @@ public class MyCourseViewHolder extends RecyclerView.ViewHolder {
     public SendingProgressView vSendingProgress;
     public View vProgressBg;
 
-    public MyCourseViewHolder(View view) {
+    public MyCourseViewHolder(View view, ControllerCourseItem controller) {
         super(view);
         ButterKnife.bind(this, view);
+
+        setupClickableViews(controller);
+    }
+
+    private void setupClickableViews(final ControllerCourseItem controller) {
+        this.ivCourseCoverImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                controller.onCoverImageClick();
+            }
+        });
     }
 
     public void bindData(CourseVO courseVO) {
@@ -81,6 +94,30 @@ public class MyCourseViewHolder extends RecyclerView.ViewHolder {
 //                    .placeholder(R.drawable.stock_photo_placeholder)
 //                    .error(R.drawable.stock_photo_placeholder)
 //                    .into(ivAttraction);
+    }
+
+    public static class LoadingCourseItemViewHolder extends MyCourseViewHolder {
+
+        public LoadingCourseItemView loadingCourseItemView;
+
+        public LoadingCourseItemViewHolder(LoadingCourseItemView view, ControllerCourseItem controller) {
+            super(view, controller);
+            this.loadingCourseItemView = view;
+        }
+
+        @Override
+        public void bindData(CourseVO courseVO) {
+            super.bindData(courseVO);
+        }
+    }
+
+    public interface ControllerCourseItem {
+        void onTapCourse(CourseVO course);
+        void onCommentsClick(View v, int position);
+        void onMoreClick(View v, int position);
+        void onProfileClick(View v);
+
+        void onCoverImageClick();
     }
 
 }

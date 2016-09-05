@@ -2,23 +2,36 @@ package net.naylinaung.appdesign.activities;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.util.Pair;
+import android.support.v4.widget.ExploreByTouchHelper;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.transition.Explode;
+import android.transition.Fade;
+import android.transition.Slide;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.animation.OvershootInterpolator;
 import android.widget.Toast;
 
 import net.naylinaung.appdesign.R;
 import net.naylinaung.appdesign.adapters.MyCourseAdapter;
+import net.naylinaung.appdesign.animators.RecyclerItemAnimator;
 import net.naylinaung.appdesign.data.vos.CourseVO;
 import net.naylinaung.appdesign.utils.ScreenUtils;
+import net.naylinaung.appdesign.utils.TransitionHelper;
+import net.naylinaung.appdesign.views.holders.MyCourseViewHolder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +39,8 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MainActivity extends BaseActivity {
+public class MainActivity extends BaseActivity
+        implements MyCourseViewHolder.ControllerCourseItem {
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -55,6 +69,7 @@ public class MainActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this, this);
+        setupWindowAnimations();
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -84,24 +99,45 @@ public class MainActivity extends BaseActivity {
                 return 300;
             }
         };
+        rvMyCourse.setLayoutManager(linearLayoutManager);
 
         myCourseAdapter = new MyCourseAdapter(new ArrayList<CourseVO>(), this);
         rvMyCourse.setAdapter(myCourseAdapter);
-        rvMyCourse.setLayoutManager(linearLayoutManager);
 
-//        rvMyCourse.setOnScrollListener(new RecyclerView.OnScrollListener() {
-//            @Override
-//            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-////                FeedContextMenuManager.getInstance().onScrolled(recyclerView, dx, dy);
-//            }
-//        });
+
+        rvMyCourse.setOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                // TODO
+//                FeedContextMenuManager.getInstance().onScrolled(recyclerView, dx, dy);
+            }
+        });
+
+        rvMyCourse.setItemAnimator(new RecyclerItemAnimator());
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        if (ACTION_SHOW_LOADING_ITEM.equals(intent.getAction())) {
+            showFeedLoadingItemDelayed();
+        }
     }
 
     private void prepareIntroAnimation() {
         fabSearch.setTranslationY(2 * getResources().getDimensionPixelOffset(R.dimen.btn_fab_size));
         getToolbar().setTranslationY(-ACTION_BAR_SIZE);
         getScreenTitle().setTranslationY(-ACTION_BAR_SIZE);
+    }
 
+    private void showFeedLoadingItemDelayed() {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                rvMyCourse.smoothScrollToPosition(0);
+                myCourseAdapter.showLoadingView();
+            }
+        }, 500);
     }
 
     private void startIntroAnimation() {
@@ -203,5 +239,44 @@ public class MainActivity extends BaseActivity {
         courseList.add(courseThree);
 
         return courseList;
+    }
+
+    //region CourseItemListener
+    @Override
+    public void onTapCourse(CourseVO course) {
+
+    }
+
+    @Override
+    public void onCommentsClick(View v, int position) {
+
+    }
+
+    @Override
+    public void onMoreClick(View v, int position) {
+
+    }
+
+    @Override
+    public void onProfileClick(View v) {
+
+    }
+
+    @Override
+    public void onCoverImageClick() {
+        Intent intent = RegisteredCourseDetailActivity.newIntent("SampleCourseName");
+
+        final Pair<View, String>[] pairs = TransitionHelper.createSafeTransitionParticipants(this, true);
+        ActivityOptionsCompat transitionActivityOptions = ActivityOptionsCompat.makeSceneTransitionAnimation(this, pairs);
+        startActivity(intent, transitionActivityOptions.toBundle());
+    }
+    //endregion
+
+    private void setupWindowAnimations() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Fade explode = new Fade();
+            explode.setDuration(800);
+            getWindow().setExitTransition(explode);
+        }
     }
 }

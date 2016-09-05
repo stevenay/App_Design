@@ -14,14 +14,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:paddingRight="@dimen/margin_medium"
-        android:paddingLeft="@dimen/margin_medium"
-        android:paddingBottom="@dimen/margin_medium_2">
+        android:background="#ffffff"
+        android:paddingBottom="0dp">
 
         <FrameLayout
             android:id="@+id/vImageRoot"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/margin_medium"
+            android:layout_marginLeft="@dimen/margin_medium">
 
             <ImageView
                 android:id="@+id/iv_course_cover_image"
@@ -67,6 +68,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_medium_2"
+            android:layout_marginRight="@dimen/margin_medium"
+            android:layout_marginLeft="@dimen/margin_medium"
             android:layout_gravity="center_horizontal"
             android:paddingLeft="@dimen/margin_medium_3"
             android:paddingRight="@dimen/margin_medium_3"
@@ -98,6 +101,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_medium_2"
+            android:padding="@dimen/margin_medium_2"
+            android:background="#efefef"
             android:paddingLeft="8dp"
             android:paddingRight="8dp">
 

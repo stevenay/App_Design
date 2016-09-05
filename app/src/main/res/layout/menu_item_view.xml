@@ -4,4 +4,4 @@
     android:layout_width="?attr/actionBarSize"
     android:layout_height="?attr/actionBarSize"
     android:background="@drawable/btn_default_light"
-    android:src="@drawable/circled_user_male_96" />
+    android:src="@drawable/ic_circled_user_male_96" />
