@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="course_background_sample">#afd582</color>
+    <color name="course_background_dark_sample">#8cc99b</color>
 
     <color name="menuPrimary">#2f4050</color>
     <!-- Primer Primary Color #536e79 -->
@@ -53,4 +54,5 @@
     <color name="text_like_counter">#2b5a83</color>
 
     <color name="bg_comments">#ffffff</color>
+    <color name="transparent">#00000000</color>
 </resources>
