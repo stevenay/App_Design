@@ -19,7 +19,7 @@ import net.naylinaung.appdesign.views.items.LoadingCourseItemView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MyCourseViewHolder extends RecyclerView.ViewHolder {
+public class MyCourseViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
     @BindView(R.id.iv_course_cover_image)
     ImageView ivCourseCoverImage;
 
@@ -53,6 +53,7 @@ public class MyCourseViewHolder extends RecyclerView.ViewHolder {
     @BindView(R.id.tsLikesCounter)
     public TextSwitcher tsLikesCounter;
 
+    private ControllerCourseItem mController;
     private CourseVO mCourseVO;
 
     public SendingProgressView vSendingProgress;
@@ -62,6 +63,7 @@ public class MyCourseViewHolder extends RecyclerView.ViewHolder {
         super(view);
         ButterKnife.bind(this, view);
 
+        this.mController = controller;
         setupClickableViews(controller);
     }
 
@@ -72,6 +74,8 @@ public class MyCourseViewHolder extends RecyclerView.ViewHolder {
                 controller.onCoverImageClick();
             }
         });
+
+
     }
 
     public void bindData(CourseVO courseVO) {
@@ -94,6 +98,11 @@ public class MyCourseViewHolder extends RecyclerView.ViewHolder {
 //                    .placeholder(R.drawable.stock_photo_placeholder)
 //                    .error(R.drawable.stock_photo_placeholder)
 //                    .into(ivAttraction);
+    }
+
+    @Override
+    public void onClick(View view) {
+        this.mController.onTapCourse(this.mCourseVO);
     }
 
     public static class LoadingCourseItemViewHolder extends MyCourseViewHolder {

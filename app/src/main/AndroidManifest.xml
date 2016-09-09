@@ -19,10 +19,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".activities.RegisteredCourseDetailActivity"
             android:theme="@style/AppTheme.NoActionBar"></activity>
-        <activity android:name=".activities.CourseFlowActivity"></activity>
+
+        <activity android:name=".activities.CourseFlowActivity"
+            android:theme="@style/AppTheme.Base.NoActionBar">
+        </activity>
     </application>
 
 </manifest>

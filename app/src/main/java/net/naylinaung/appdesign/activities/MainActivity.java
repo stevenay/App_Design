@@ -244,7 +244,8 @@ public class MainActivity extends BaseActivity
     //region CourseItemListener
     @Override
     public void onTapCourse(CourseVO course) {
-
+        Intent intent = CourseFlowActivity.newIntent("SampleCourseID");
+        startActivity(intent);
     }
 
     @Override
