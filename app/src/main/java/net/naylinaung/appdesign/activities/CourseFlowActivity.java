@@ -103,6 +103,12 @@ public class CourseFlowActivity extends AppCompatActivity
         this.onBackPressed();
     }
 
+    @OnClick(R.id.btn_share)
+    public void onbtnSharePressed(ImageButton view) {
+        Intent intent = PopupQuestionActivity.newIntent("SampleLessonCardID");
+        startActivity(intent);
+    }
+
     //region ControllerLessonCardItem Implementation
     @Override
     public void onTapPinButton(LessonCardVO lessonCard) {

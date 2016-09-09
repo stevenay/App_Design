@@ -37,6 +37,7 @@
             style="?android:attr/progressBarStyleHorizontal" />
 
         <ImageButton
+            android:id="@+id/btn_share"
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:layout_weight="0"
