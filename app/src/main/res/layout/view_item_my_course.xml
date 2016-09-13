@@ -5,9 +5,11 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="center"
-    android:layout_marginTop="8dp"
+    android:layout_marginTop="6dp"
+    android:layout_marginBottom="2dp"
     android:layout_marginLeft="8dp"
-    android:layout_marginRight="8dp">
+    android:layout_marginRight="8dp"
+    card_view:cardCornerRadius="0dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -50,7 +52,7 @@
 
         </FrameLayout>
 
-        <net.naylinaung.appdesign.components.MMTextView
+        <TextView
             android:id="@+id/tv_category_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -59,7 +61,8 @@
             android:text="life style"
             android:textAllCaps="true"
             android:textSize="@dimen/text_small"
-            android:textColor="@color/primary_text"
+            android:textColor="@color/course_background_sample"
+            android:textStyle="bold"
             />
 
         <net.naylinaung.appdesign.components.MMTextView

@@ -1,6 +1,7 @@
 package net.naylinaung.appdesign.activities;
 
 import android.content.Intent;
+import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
@@ -21,12 +22,16 @@ import com.ogaclejapan.smarttablayout.SmartTabLayout;
 import net.naylinaung.appdesign.AppDesignApp;
 import net.naylinaung.appdesign.R;
 import net.naylinaung.appdesign.adapters.ChapterAdapter;
+import net.naylinaung.appdesign.adapters.CourseHeaderPagerAdapter;
 import net.naylinaung.appdesign.adapters.CoursePagerAdapter;
 import net.naylinaung.appdesign.adapters.MyCourseAdapter;
 import net.naylinaung.appdesign.animators.RecyclerItemAnimator;
+import net.naylinaung.appdesign.components.PageIndicatorView;
 import net.naylinaung.appdesign.data.vos.ChapterVO;
 import net.naylinaung.appdesign.data.vos.CourseVO;
+import net.naylinaung.appdesign.fragments.CourseInfoHeaderFragment;
 import net.naylinaung.appdesign.fragments.CourseListFragment;
+import net.naylinaung.appdesign.fragments.CourseProgressHeaderFragment;
 import net.naylinaung.appdesign.utils.MMFontUtils;
 import net.naylinaung.appdesign.utils.TransitionHelper;
 import net.naylinaung.appdesign.views.holders.ChapterViewHolder;
@@ -39,6 +44,9 @@ import butterknife.ButterKnife;
 public class RegisteredCourseDetailActivity extends AppCompatActivity
     implements ChapterViewHolder.ControllerChapterItem {
 
+    @BindView(R.id.appbar)
+    AppBarLayout appBar;
+
     @BindView(R.id.collapsing_toolbar)
     CollapsingToolbarLayout collapsingToolbar;
 
@@ -48,8 +56,14 @@ public class RegisteredCourseDetailActivity extends AppCompatActivity
     @BindView(R.id.pager_navigations)
     ViewPager pagerNavigations;
 
+    @BindView(R.id.pager_course_header)
+    ViewPager pageCourseHeader;
+
     @BindView(R.id.fab_play_course)
     FloatingActionButton fabPlayCourse;
+
+    @BindView(R.id.pi_course_header_pager)
+    PageIndicatorView piCourseHeaderPager;
 
     private static final String IE_COURSE_NAME = "IE_COURSE_NAME";
 
@@ -101,9 +115,54 @@ public class RegisteredCourseDetailActivity extends AppCompatActivity
         }
     }
 
-    private void bindData(CourseVO courseVO) {
+    private void bindData(final CourseVO courseVO) {
         MMFontUtils.applyMMFontToCollapsingToolbar(collapsingToolbar);
-        collapsingToolbar.setTitle(courseVO.getTitle());
+
+        // hide CollapsingToolbar Title on Expanded Condition
+        // show only when Collapsed State
+        appBar.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
+            boolean isShow = false;
+            int scrollRange = -1;
+
+            @Override
+            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+                if (scrollRange == -1) {
+                    scrollRange = appBarLayout.getTotalScrollRange();
+                }
+                if (scrollRange + verticalOffset == 0) {
+                    collapsingToolbar.setTitle(courseVO.getTitle());
+                    isShow = true;
+                } else if(isShow) {
+                    collapsingToolbar.setTitle(" ");//carefull there should a space between double quote otherwise it wont work
+                    isShow = false;
+                }
+            }
+        });
+
+        piCourseHeaderPager.setNumPage(2);
+
+        CourseHeaderPagerAdapter pagerAdapter = new CourseHeaderPagerAdapter(getSupportFragmentManager());
+        pagerAdapter.addTab(CourseInfoHeaderFragment.newInstance(), "CourseInfo");
+        pagerAdapter.addTab(CourseProgressHeaderFragment.newInstance(), "CourseProgress");
+
+        pageCourseHeader.setAdapter(pagerAdapter);
+        pageCourseHeader.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                piCourseHeaderPager.setCurrentPage(position);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+
     }
 
     private CourseVO prepareSampleCourseVO()

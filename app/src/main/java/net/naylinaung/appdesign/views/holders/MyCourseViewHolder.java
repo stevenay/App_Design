@@ -83,6 +83,7 @@ public class MyCourseViewHolder extends RecyclerView.ViewHolder implements View.
         ivCourseCoverImage.setBackgroundColor(Color.parseColor(mCourseVO.getColorCode()));
         tvCourseTitle.setText(mCourseVO.getTitle());
         tvCategoryName.setText(mCourseVO.getCategoryName());
+        tvCategoryName.setTextColor(Color.parseColor(mCourseVO.getColorCode()));
         String durationAndAuthor = mCourseVO.getDurationInMinute().toString() + " mins - Admin Team";
         tvDuration.setText(durationAndAuthor);
 

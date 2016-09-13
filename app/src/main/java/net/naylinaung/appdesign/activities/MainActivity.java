@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.Nullable;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -13,6 +14,7 @@ import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.util.Pair;
 import android.support.v4.widget.ExploreByTouchHelper;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -23,6 +25,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.OvershootInterpolator;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import net.naylinaung.appdesign.R;
@@ -54,6 +57,11 @@ public class MainActivity extends BaseActivity
     @BindView(R.id.fab_search)
     FloatingActionButton fabSearch;
 
+    @BindView(R.id.tv_screen_title)
+    TextView tvScreenTitle;
+
+    private MenuItem inboxMenuItem;
+
     public static final String ACTION_SHOW_LOADING_ITEM = "action_show_loading_item";
     public static final int ACTION_BAR_SIZE = ScreenUtils.dpToPx(56);
 
@@ -61,7 +69,6 @@ public class MainActivity extends BaseActivity
     private static final int ANIM_DURATION_FAB = 400;
 
     private MyCourseAdapter myCourseAdapter;
-
     private boolean pendingIntroAnimation;
 
     @Override
@@ -104,15 +111,6 @@ public class MainActivity extends BaseActivity
         myCourseAdapter = new MyCourseAdapter(new ArrayList<CourseVO>(), this);
         rvMyCourse.setAdapter(myCourseAdapter);
 
-
-        rvMyCourse.setOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                // TODO
-//                FeedContextMenuManager.getInstance().onScrolled(recyclerView, dx, dy);
-            }
-        });
-
         rvMyCourse.setItemAnimator(new RecyclerItemAnimator());
     }
 
@@ -126,8 +124,8 @@ public class MainActivity extends BaseActivity
 
     private void prepareIntroAnimation() {
         fabSearch.setTranslationY(2 * getResources().getDimensionPixelOffset(R.dimen.btn_fab_size));
-        getToolbar().setTranslationY(-ACTION_BAR_SIZE);
-        getScreenTitle().setTranslationY(-ACTION_BAR_SIZE);
+        toolbar.setTranslationY(-ACTION_BAR_SIZE);
+        tvScreenTitle.setTranslationY(-ACTION_BAR_SIZE);
     }
 
     private void showFeedLoadingItemDelayed() {
@@ -142,17 +140,17 @@ public class MainActivity extends BaseActivity
 
     private void startIntroAnimation() {
 
-        getInboxMenuItem().getActionView().setTranslationY(-ACTION_BAR_SIZE);
+        inboxMenuItem.getActionView().setTranslationY(-ACTION_BAR_SIZE);
 
-        getToolbar().animate()
+        toolbar.animate()
                 .translationY(0)
                 .setDuration(ANIM_DURATION_TOOLBAR)
                 .setStartDelay(300);
-        getScreenTitle().animate()
+        tvScreenTitle.animate()
                 .translationY(0)
                 .setDuration(ANIM_DURATION_TOOLBAR)
                 .setStartDelay(400);
-        getInboxMenuItem().getActionView().animate()
+        inboxMenuItem.getActionView().animate()
                 .translationY(0)
                 .setDuration(ANIM_DURATION_TOOLBAR)
                 .setStartDelay(500)
@@ -178,7 +176,10 @@ public class MainActivity extends BaseActivity
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        super.onCreateOptionsMenu(menu);
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+
+        inboxMenuItem = menu.findItem(R.id.action_profile);
+        inboxMenuItem.setActionView(R.layout.menu_item_view);
 
         if (pendingIntroAnimation) {
             pendingIntroAnimation = false;
