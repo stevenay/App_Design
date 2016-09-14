@@ -198,7 +198,6 @@ public class MainActivity extends BaseActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_profile) {
-            Toast.makeText(getApplicationContext(), "Tap on Profile", Toast.LENGTH_LONG).show();
             return true;
         }
 
@@ -245,7 +244,7 @@ public class MainActivity extends BaseActivity
     //region CourseItemListener
     @Override
     public void onTapCourse(CourseVO course) {
-        Intent intent = CourseFlowActivity.newIntent("SampleCourseID");
+        Intent intent = TodoListActivity.newIntent("Sample CourseID");
         startActivity(intent);
     }
 

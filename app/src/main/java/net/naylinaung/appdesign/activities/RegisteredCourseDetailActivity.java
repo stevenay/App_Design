@@ -4,39 +4,30 @@ import android.content.Intent;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.TabLayout;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.util.Pair;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.transition.Explode;
 import android.transition.Fade;
-import android.transition.Slide;
 import android.view.View;
 
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
 
 import net.naylinaung.appdesign.AppDesignApp;
 import net.naylinaung.appdesign.R;
-import net.naylinaung.appdesign.adapters.ChapterAdapter;
 import net.naylinaung.appdesign.adapters.CourseHeaderPagerAdapter;
 import net.naylinaung.appdesign.adapters.CoursePagerAdapter;
-import net.naylinaung.appdesign.adapters.MyCourseAdapter;
-import net.naylinaung.appdesign.animators.RecyclerItemAnimator;
 import net.naylinaung.appdesign.components.PageIndicatorView;
 import net.naylinaung.appdesign.data.vos.ChapterVO;
 import net.naylinaung.appdesign.data.vos.CourseVO;
+import net.naylinaung.appdesign.fragments.ChapterListFragment;
 import net.naylinaung.appdesign.fragments.CourseInfoHeaderFragment;
-import net.naylinaung.appdesign.fragments.CourseListFragment;
 import net.naylinaung.appdesign.fragments.CourseProgressHeaderFragment;
 import net.naylinaung.appdesign.utils.MMFontUtils;
 import net.naylinaung.appdesign.utils.TransitionHelper;
 import net.naylinaung.appdesign.views.holders.ChapterViewHolder;
-
-import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -86,9 +77,9 @@ public class RegisteredCourseDetailActivity extends AppCompatActivity
 
         mCoursePagerAdapter = new CoursePagerAdapter(getSupportFragmentManager());
 
-        mCoursePagerAdapter.addTab(CourseListFragment.newInstance(), "CHAPTERS");
-        mCoursePagerAdapter.addTab(CourseListFragment.newInstance(), "LEADER-BOARD");
-        mCoursePagerAdapter.addTab(CourseListFragment.newInstance(), "DISCUSSION");
+        mCoursePagerAdapter.addTab(ChapterListFragment.newInstance(), "CHAPTERS");
+        mCoursePagerAdapter.addTab(ChapterListFragment.newInstance(), "TODO-List (3)");
+        mCoursePagerAdapter.addTab(ChapterListFragment.newInstance(), "DISCUSSION");
 
         pagerNavigations.setAdapter(mCoursePagerAdapter);
         pagerNavigations.setOffscreenPageLimit(mCoursePagerAdapter.getCount());

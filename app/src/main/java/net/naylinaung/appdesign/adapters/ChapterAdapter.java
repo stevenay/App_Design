@@ -35,12 +35,12 @@ public class ChapterAdapter extends RecyclerView.Adapter<ChapterViewHolder> {
 
     @Override
     public void onBindViewHolder(ChapterViewHolder holder, int position) {
-//        holder.bindData(mChapterList.get(position));
+        holder.bindData(mChapterList.get(position));
     }
 
     @Override
     public int getItemCount() {
-        return 10;
+        return mChapterList.size();
     }
 
     public void setNewData(List<ChapterVO> newChapterList) {
