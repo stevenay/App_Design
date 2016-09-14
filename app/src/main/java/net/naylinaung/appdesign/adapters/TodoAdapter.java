@@ -64,7 +64,7 @@ public class TodoAdapter extends RecyclerSwipeAdapter<TodoAdapter.SimpleViewHold
 
     @Override
     public SimpleViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.view_item_todo, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.view_item_course_todo, parent, false);
         return new SimpleViewHolder(view);
     }
 

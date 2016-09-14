@@ -30,7 +30,6 @@ public class TodoListActivity extends AppCompatActivity {
     RecyclerView rvTodoList;
 
     private RecyclerView.Adapter mAdapter;
-
     private ArrayList<String> mDataSet;
 
     private static final String IE_COURSE_ID = "IE_COURSE_ID";

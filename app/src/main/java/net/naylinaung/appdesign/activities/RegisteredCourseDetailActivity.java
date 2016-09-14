@@ -25,6 +25,7 @@ import net.naylinaung.appdesign.data.vos.CourseVO;
 import net.naylinaung.appdesign.fragments.ChapterListFragment;
 import net.naylinaung.appdesign.fragments.CourseInfoHeaderFragment;
 import net.naylinaung.appdesign.fragments.CourseProgressHeaderFragment;
+import net.naylinaung.appdesign.fragments.CourseTodoListFragment;
 import net.naylinaung.appdesign.utils.MMFontUtils;
 import net.naylinaung.appdesign.utils.TransitionHelper;
 import net.naylinaung.appdesign.views.holders.ChapterViewHolder;
@@ -78,8 +79,8 @@ public class RegisteredCourseDetailActivity extends AppCompatActivity
         mCoursePagerAdapter = new CoursePagerAdapter(getSupportFragmentManager());
 
         mCoursePagerAdapter.addTab(ChapterListFragment.newInstance(), "CHAPTERS");
-        mCoursePagerAdapter.addTab(ChapterListFragment.newInstance(), "TODO-List (3)");
         mCoursePagerAdapter.addTab(ChapterListFragment.newInstance(), "DISCUSSION");
+        mCoursePagerAdapter.addTab(CourseTodoListFragment.newInstance(), "TODO-List (3)");
 
         pagerNavigations.setAdapter(mCoursePagerAdapter);
         pagerNavigations.setOffscreenPageLimit(mCoursePagerAdapter.getCount());
