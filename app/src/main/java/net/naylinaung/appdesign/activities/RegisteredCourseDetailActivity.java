@@ -22,19 +22,23 @@ import net.naylinaung.appdesign.adapters.CoursePagerAdapter;
 import net.naylinaung.appdesign.components.PageIndicatorView;
 import net.naylinaung.appdesign.data.vos.ChapterVO;
 import net.naylinaung.appdesign.data.vos.CourseVO;
+import net.naylinaung.appdesign.data.vos.DiscussionVO;
 import net.naylinaung.appdesign.fragments.ChapterListFragment;
 import net.naylinaung.appdesign.fragments.CourseInfoHeaderFragment;
 import net.naylinaung.appdesign.fragments.CourseProgressHeaderFragment;
 import net.naylinaung.appdesign.fragments.CourseTodoListFragment;
+import net.naylinaung.appdesign.fragments.DiscussionListFragment;
 import net.naylinaung.appdesign.utils.MMFontUtils;
 import net.naylinaung.appdesign.utils.TransitionHelper;
 import net.naylinaung.appdesign.views.holders.ChapterViewHolder;
+import net.naylinaung.appdesign.views.holders.DiscussionViewHolder;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class RegisteredCourseDetailActivity extends AppCompatActivity
-    implements ChapterViewHolder.ControllerChapterItem {
+    implements ChapterViewHolder.ControllerChapterItem,
+        DiscussionViewHolder.ControllerDiscussionItem {
 
     @BindView(R.id.appbar)
     AppBarLayout appBar;
@@ -79,7 +83,7 @@ public class RegisteredCourseDetailActivity extends AppCompatActivity
         mCoursePagerAdapter = new CoursePagerAdapter(getSupportFragmentManager());
 
         mCoursePagerAdapter.addTab(ChapterListFragment.newInstance(), "CHAPTERS");
-        mCoursePagerAdapter.addTab(ChapterListFragment.newInstance(), "DISCUSSION");
+        mCoursePagerAdapter.addTab(DiscussionListFragment.newInstance(), "DISCUSSION");
         mCoursePagerAdapter.addTab(CourseTodoListFragment.newInstance(), "TODO-List (3)");
 
         pagerNavigations.setAdapter(mCoursePagerAdapter);
@@ -175,6 +179,11 @@ public class RegisteredCourseDetailActivity extends AppCompatActivity
 
     @Override
     public void onTapChapter(ChapterVO chapter) {
+
+    }
+
+    @Override
+    public void onTapDiscussion(DiscussionVO discussion) {
 
     }
 }

@@ -21,10 +21,10 @@ public class ChapterAdapter extends RecyclerView.Adapter<ChapterViewHolder> {
     private List<ChapterVO> mChapterList;
     private ChapterViewHolder.ControllerChapterItem mControllerChapterItem;
 
-    public ChapterAdapter(List<ChapterVO> chapterList, ChapterViewHolder.ControllerChapterItem controllerAttractionItem) {
+    public ChapterAdapter(List<ChapterVO> chapterList, ChapterViewHolder.ControllerChapterItem controllerChapterItem) {
         mInflater = LayoutInflater.from(AppDesignApp.getContext());
         mChapterList = chapterList;
-        mControllerChapterItem = controllerAttractionItem;
+        mControllerChapterItem = controllerChapterItem;
     }
 
     @Override
