@@ -1,6 +1,7 @@
 package net.naylinaung.appdesign.adapters;
 
 import android.content.Context;
+import android.graphics.Paint;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -21,16 +22,19 @@ import com.daimajia.swipe.implments.SwipeItemRecyclerMangerImpl;
 import net.naylinaung.appdesign.AppDesignApp;
 import net.naylinaung.appdesign.R;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 
 /**
  * Created by NayLinAung on 9/13/2016.
  */
-public class TodoAdapter extends RecyclerSwipeAdapter<TodoAdapter.SimpleViewHolder> {
+public class CourseTodoAdapter extends RecyclerSwipeAdapter<CourseTodoAdapter.SimpleViewHolder> {
 
     public static class SimpleViewHolder extends RecyclerView.ViewHolder {
         SwipeLayout swipeLayout;
         TextView textViewData;
+        TextView tvDoneLabel;
         LinearLayout layoutSave;
         LinearLayout layoutDelete;
 
@@ -39,6 +43,7 @@ public class TodoAdapter extends RecyclerSwipeAdapter<TodoAdapter.SimpleViewHold
 
             swipeLayout = (SwipeLayout) itemView.findViewById(R.id.swipe_todo);
             textViewData = (TextView) itemView.findViewById(R.id.text_data);
+            tvDoneLabel = (TextView) itemView.findViewById(R.id.tv_done_label);
             layoutSave = (LinearLayout) itemView.findViewById(R.id.layout_save);
             layoutDelete = (LinearLayout) itemView.findViewById(R.id.layout_delete);
 
@@ -57,14 +62,14 @@ public class TodoAdapter extends RecyclerSwipeAdapter<TodoAdapter.SimpleViewHold
 
     protected SwipeItemRecyclerMangerImpl mItemManger = new SwipeItemRecyclerMangerImpl(this);
 
-    public TodoAdapter(ArrayList<String> objects) {
+    public CourseTodoAdapter(ArrayList<String> objects) {
         this.mContext = AppDesignApp.getContext();
         this.mDataset = objects;
     }
 
     @Override
     public SimpleViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.view_item_todo, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.view_item_course_todo, parent, false);
         return new SimpleViewHolder(view);
     }
 
@@ -83,13 +88,13 @@ public class TodoAdapter extends RecyclerSwipeAdapter<TodoAdapter.SimpleViewHold
         viewHolder.swipeLayout.setOnClickListener(new SwipeLayout.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                final SwipeLayout layout = (SwipeLayout) view;
-//                layout.postDelayed(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        layout.toggle();
-//                    }
-//                }, 50);
+                final SwipeLayout layout = (SwipeLayout) view;
+                layout.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        layout.toggle();
+                    }
+                }, 50);
             }
         });
 
@@ -105,8 +110,6 @@ public class TodoAdapter extends RecyclerSwipeAdapter<TodoAdapter.SimpleViewHold
             }
         });
 
-
-
         viewHolder.layoutDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -115,12 +118,37 @@ public class TodoAdapter extends RecyclerSwipeAdapter<TodoAdapter.SimpleViewHold
                 notifyItemRemoved(position);
                 notifyItemRangeChanged(position, mDataset.size());
                 mItemManger.closeAllItems();
-                Toast.makeText(view.getContext(), "Deleted " + viewHolder.textViewData.getText().toString() + "!", Toast.LENGTH_SHORT).show();
+                // + viewHolder.textViewData.getText().toString() + "!"
+                Toast.makeText(view.getContext(), "Removed 1 item!", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        viewHolder.layoutSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mItemManger.closeAllItems();
+                Toast.makeText(view.getContext(), "Done 1 item!", Toast.LENGTH_SHORT).show();
+                viewHolder.layoutSave.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (viewHolder.tvDoneLabel.getText().toString().toLowerCase().equals("done")) {
+                            viewHolder.textViewData.setPaintFlags(viewHolder.textViewData.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                            viewHolder.tvDoneLabel.setText("Undo");
+                        } else {
+                            viewHolder.textViewData.setPaintFlags(viewHolder.textViewData.getPaintFlags() & (~ Paint.STRIKE_THRU_TEXT_FLAG));
+                            viewHolder.tvDoneLabel.setText("Done");
+                        }
+                    }
+                }, 50);
             }
         });
 
         viewHolder.textViewData.setText(item);
         mItemManger.bindView(viewHolder.itemView, position);
+    }
+
+    public String getItem(int position) {
+        return mDataset.get(position);
     }
 
     @Override

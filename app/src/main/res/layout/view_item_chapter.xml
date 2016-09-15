@@ -101,6 +101,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="@dimen/margin_medium_2"
                 android:layout_alignParentLeft="true"
+                android:visibility="invisible"
                 android:gravity="left"
                 android:text="48% ဖတ္ၿပီး"
                 android:textColor="@color/black_overlay_light"
