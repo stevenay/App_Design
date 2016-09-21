@@ -70,16 +70,5 @@
             android:background="@color/menuPrimary"
             app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/fab_search"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|right"
-            android:layout_margin="@dimen/fab_margin"
-            android:src="@drawable/ic_search_24dp"
-            android:elevation="@dimen/default_elevation"
-            app:pressedTranslationZ="12dp"
-            android:tint="@android:color/white" />
-
     </android.support.design.widget.CoordinatorLayout>
 </android.support.v4.widget.DrawerLayout>

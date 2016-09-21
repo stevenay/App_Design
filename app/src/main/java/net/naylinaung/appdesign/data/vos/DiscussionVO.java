@@ -1,19 +1,37 @@
 package net.naylinaung.appdesign.data.vos;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by NayLinAung on 9/16/2016.
  */
 public class DiscussionVO {
 
+    @SerializedName("discussion_id")
     private int discussionID;
-    private String title;
+
+    @SerializedName("discussion_title")
+    private String discussionTitle;
+
+    @SerializedName("description")
     private String description;
-    private String userName;
+
+    @SerializedName("user_id")
+    private String userId;
+
     private String postPastTime;
+
+    @SerializedName("post_datetime")
     private Date postedTime;
+
+    @SerializedName("like_count")
     private Integer likes;
+
+    @SerializedName("replies")
+    private List<ReplyVO> replies;
 
     public int getDiscussionID() {
         return discussionID;

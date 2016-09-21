@@ -53,8 +53,8 @@ public class MainActivity extends BaseActivity
     @BindView(R.id.content)
     CoordinatorLayout clContent;
 
-    @BindView(R.id.fab_search)
-    FloatingActionButton fabSearch;
+//    @BindView(R.id.fab_search)
+//    FloatingActionButton fabSearch;
 
     @BindView(R.id.tv_screen_title)
     TextView tvScreenTitle;
@@ -90,14 +90,6 @@ public class MainActivity extends BaseActivity
             pendingIntroAnimation = true;
             prepareIntroAnimation();
         }
-
-        fabSearch.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Sorry. Search on Attractions is not being supported yet.", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
     }
 
     @Override
@@ -109,7 +101,7 @@ public class MainActivity extends BaseActivity
     }
 
     private void prepareIntroAnimation() {
-        fabSearch.setTranslationY(2 * getResources().getDimensionPixelOffset(R.dimen.btn_fab_size));
+//        fabSearch.setTranslationY(2 * getResources().getDimensionPixelOffset(R.dimen.btn_fab_size));
         toolbar.setTranslationY(-ACTION_BAR_SIZE);
         tvScreenTitle.setTranslationY(-ACTION_BAR_SIZE);
     }
@@ -140,14 +132,14 @@ public class MainActivity extends BaseActivity
     }
 
     private void startContentAnimation() {
-        fabSearch.animate()
-                .translationY(0)
-                .setInterpolator(new OvershootInterpolator(1.f))
-                .setStartDelay(300)
-                .setDuration(ANIM_DURATION_FAB)
-                .start();
+//        fabSearch.animate()
+//                .translationY(0)
+//                .setInterpolator(new OvershootInterpolator(1.f))
+//                .setStartDelay(300)
+//                .setDuration(ANIM_DURATION_FAB)
+//                .start();
 
-        navigateToFeaturedCourseListFragment();
+        navigateToMyCourseListFragment();
     }
 
     @Override

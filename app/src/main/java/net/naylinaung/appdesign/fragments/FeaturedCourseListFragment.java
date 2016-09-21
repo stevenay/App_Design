@@ -79,7 +79,7 @@ public class FeaturedCourseListFragment extends Fragment {
         courseOne.setDurationInMinute(15);
         courseOne.setAuthorName("Admin Team");
         courseOne.setColorCode("#aed582");
-        courseOne.setImageUrl("co_terrace.png");
+        courseOne.setCoverPhotoUrl("co_terrace.png");
         courseList.add(courseOne);
 
         CourseVO courseTwo = new CourseVO();
@@ -88,7 +88,7 @@ public class FeaturedCourseListFragment extends Fragment {
         courseTwo.setDurationInMinute(15);
         courseTwo.setAuthorName("Admin Team");
         courseTwo.setColorCode("#81c683");
-        courseOne.setImageUrl("co_runner.png");
+        courseOne.setCoverPhotoUrl("co_runner.png");
         courseList.add(courseTwo);
 
         CourseVO courseThree = new CourseVO();
@@ -97,7 +97,7 @@ public class FeaturedCourseListFragment extends Fragment {
         courseThree.setDurationInMinute(10);
         courseThree.setAuthorName("Admin Team");
         courseThree.setColorCode("#25c6da");
-        courseOne.setImageUrl("co_terrace.png");
+        courseOne.setCoverPhotoUrl("co_terrace.png");
         courseList.add(courseThree);
 
         return courseList;

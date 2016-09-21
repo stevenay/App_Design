@@ -32,8 +32,8 @@ public class MyCourseViewHolder extends RecyclerView.ViewHolder {
     @BindView(R.id.tv_duration)
     TextView tvDuration;
 
-    @BindView(R.id.vImageRoot)
-    public FrameLayout vImageRoot;
+//    @BindView(R.id.vImageRoot)
+//    public FrameLayout vImageRoot;
 
     @BindView(R.id.btnComments)
     ImageButton btnComments;
