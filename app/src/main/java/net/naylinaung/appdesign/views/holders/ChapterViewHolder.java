@@ -57,13 +57,16 @@ public class ChapterViewHolder extends RecyclerView.ViewHolder {
     private Context mContext;
 
     private ChapterVO mChapterVO;
-//    private Controller mController;
+    private ControllerChapterItem mController;
+    private View mSelfView;
 
     public ChapterViewHolder(View itemView, ControllerChapterItem controller) {
         super(itemView);
         ButterKnife.bind(this, itemView);
 
         this.mContext = AppDesignApp.getContext();
+        this.mController = controller;
+        this.mSelfView = itemView;
     }
 
     public void bindData(ChapterVO chapter) {
@@ -118,6 +121,17 @@ public class ChapterViewHolder extends RecyclerView.ViewHolder {
             else
                 tvFinishedPercentage.setText("လံုးဝ မဖတ္ရေသး");
         }
+
+        this.setupClickableViews(mSelfView, mController);
+    }
+
+    private void setupClickableViews(View selfView, final ControllerChapterItem controller) {
+        selfView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                controller.onTapChapter(mChapterVO);
+            }
+        });
     }
 
     public interface ControllerChapterItem {

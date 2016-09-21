@@ -118,5 +118,11 @@ public class CourseFlowActivity extends AppCompatActivity
             lessonCard.setBookmarked(true);
         }
     }
+
+    @Override
+    public void onTapRequestButton() {
+        Intent intent = TodoListActivity.newIntent("Sample CourseID");
+        startActivity(intent);
+    }
     //endregion
 }

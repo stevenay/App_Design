@@ -111,17 +111,46 @@
 
     </RelativeLayout>
 
-    <android.support.design.widget.FloatingActionButton
+    <!--<android.support.design.widget.FloatingActionButton-->
+        <!--android:id="@+id/fab_play_course"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginRight="@dimen/fab_margin"-->
+        <!--android:layout_marginTop="@dimen/fab_margin"-->
+        <!--android:scaleType="center"-->
+        <!--android:src="@drawable/ic_chevron_right_white_24dp"-->
+        <!--android:tint="@android:color/white"-->
+        <!--app:backgroundTint="@color/course_background_dark_sample"-->
+        <!--app:layout_anchor="@id/appbar"-->
+        <!--app:layout_anchorGravity="bottom|end|right" />-->
+
+    <com.github.clans.fab.FloatingActionButton
         android:id="@+id/fab_play_course"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginRight="@dimen/fab_margin"
-        android:layout_marginTop="@dimen/fab_margin"
-        android:scaleType="center"
+        android:layout_margin="@dimen/fab_margin"
+        android:layout_gravity="bottom|right"
         android:src="@drawable/ic_chevron_right_white_24dp"
+        app:fab_colorNormal="@color/course_background_dark_sample"
+        app:fab_colorPressed="@color/course_background_sample_ish"
+        app:fab_colorRipple="@color/primary_dark"
+        app:fab_showAnimation="@anim/show_from_bottom"
+        app:fab_hideAnimation="@anim/hide_to_bottom"
+        app:fab_progress_color="@color/text_white_ish"
+        app:fab_progress_showBackground="true" />
+
+     <!--app:layout_behavior="net.naylinaung.appdesign.utils.ScrollAwareFABBehavior"-->
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab_add_discussion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/fab_margin"
+        android:scaleType="center"
+        android:src="@drawable/ic_add_24dp"
         android:tint="@android:color/white"
+        android:visibility="invisible"
+        android:layout_gravity="bottom|end|right"
         app:backgroundTint="@color/course_background_dark_sample"
-        app:layout_anchor="@id/appbar"
-        app:layout_anchorGravity="bottom|end|right" />
+         />
 
 </android.support.design.widget.CoordinatorLayout>

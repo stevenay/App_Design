@@ -63,21 +63,12 @@
 
         </android.support.design.widget.AppBarLayout>
 
-        <!--<FrameLayout-->
-            <!--android:id="@+id/fl_container"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="match_parent"-->
-            <!--app:layout_behavior="@string/appbar_scrolling_view_behavior" />-->
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/rvMyCourse"
+        <FrameLayout
+            android:id="@+id/fl_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@id/toolbar"
             android:background="@color/menuPrimary"
-            android:paddingBottom="@dimen/margin_medium"
             app:layout_behavior="@string/appbar_scrolling_view_behavior" />
-
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/fab_search"

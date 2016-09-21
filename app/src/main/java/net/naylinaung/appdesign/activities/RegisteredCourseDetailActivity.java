@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.transition.Explode;
 import android.transition.Fade;
 import android.view.View;
+import android.widget.Toast;
 
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
 
@@ -35,6 +36,7 @@ import net.naylinaung.appdesign.views.holders.DiscussionViewHolder;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class RegisteredCourseDetailActivity extends AppCompatActivity
     implements ChapterViewHolder.ControllerChapterItem,
@@ -56,7 +58,10 @@ public class RegisteredCourseDetailActivity extends AppCompatActivity
     ViewPager pageCourseHeader;
 
     @BindView(R.id.fab_play_course)
-    FloatingActionButton fabPlayCourse;
+    com.github.clans.fab.FloatingActionButton fabPlayCourse;
+
+    @BindView(R.id.fab_add_discussion)
+    FloatingActionButton fabAddDiscussion;
 
     @BindView(R.id.pi_course_header_pager)
     PageIndicatorView piCourseHeaderPager;
@@ -90,11 +95,34 @@ public class RegisteredCourseDetailActivity extends AppCompatActivity
         pagerNavigations.setOffscreenPageLimit(mCoursePagerAdapter.getCount());
 
         tlNavigations.setViewPager(pagerNavigations);
-
-        fabPlayCourse.setOnClickListener(new View.OnClickListener() {
+        pagerNavigations.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
-            public void onClick(View view) {
-                navigateToCourseFlow();
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                switch (mCoursePagerAdapter.getPageTitle(position).toString().toLowerCase())
+                {
+                    case "discussion":
+                        fabAddDiscussion.setVisibility(View.VISIBLE);
+                        fabPlayCourse.setVisibility(View.INVISIBLE);
+                        break;
+                    case "chapters":
+                        fabAddDiscussion.setVisibility(View.INVISIBLE);
+                        fabPlayCourse.setVisibility(View.VISIBLE);
+                        break;
+                    default:
+                        fabAddDiscussion.setVisibility(View.INVISIBLE);
+                        fabPlayCourse.setVisibility(View.INVISIBLE);
+                        break;
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
             }
         });
     }
@@ -135,6 +163,9 @@ public class RegisteredCourseDetailActivity extends AppCompatActivity
             }
         });
 
+//        fabPlayCourse.setIndeterminate(false);
+//        fabPlayCourse.setProgress(30, false);
+
         piCourseHeaderPager.setNumPage(2);
 
         CourseHeaderPagerAdapter pagerAdapter = new CourseHeaderPagerAdapter(getSupportFragmentManager());
@@ -142,7 +173,7 @@ public class RegisteredCourseDetailActivity extends AppCompatActivity
         pagerAdapter.addTab(CourseProgressHeaderFragment.newInstance(), "CourseProgress");
 
         pageCourseHeader.setAdapter(pagerAdapter);
-        pageCourseHeader.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+        pageCourseHeader.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
@@ -161,12 +192,23 @@ public class RegisteredCourseDetailActivity extends AppCompatActivity
 
     }
 
+    @OnClick(R.id.fab_play_course)
+    public void onClickFabPlayCourse(View view) {
+        this.navigateToCourseFlow();
+    }
+
+    @OnClick(R.id.fab_add_discussion)
+    public void onClickFabAddDiscussion(View view) {
+        navigateToNewDiscussion(1); // need to pass Course ID
+    }
+
     private CourseVO prepareSampleCourseVO()
     {
         CourseVO courseVO = new CourseVO();
         courseVO.setTitle("UV ေရာင္ျခည္ကို ဘယ္လိုကာကြယ္မလဲ");
         return courseVO;
     }
+
 
     private void navigateToCourseFlow()
     {
@@ -177,6 +219,12 @@ public class RegisteredCourseDetailActivity extends AppCompatActivity
         startActivity(intent);
     }
 
+    private void navigateToNewDiscussion(Integer courseID)
+    {
+        Intent intent = NewDiscussionActivity.newIntent(courseID);
+        startActivity(intent);
+    }
+
     @Override
     public void onTapChapter(ChapterVO chapter) {
 
@@ -184,6 +232,16 @@ public class RegisteredCourseDetailActivity extends AppCompatActivity
 
     @Override
     public void onTapDiscussion(DiscussionVO discussion) {
+        Intent intent = DiscussionDetailActivity.newIntent("Sample Disucssion ID");
+        startActivity(intent);
+    }
 
+    @Override
+    public void onTapLikeButton(Integer discussionID) {
+
+    }
+
+    private enum ProgressType {
+        INDETERMINATE, PROGRESS_POSITIVE, PROGRESS_NEGATIVE, HIDDEN, PROGRESS_NO_ANIMATION, PROGRESS_NO_BACKGROUND
     }
 }

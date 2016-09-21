@@ -55,6 +55,7 @@ public class MyCourseViewHolder extends RecyclerView.ViewHolder {
 
     private ControllerCourseItem mController;
     private CourseVO mCourseVO;
+    private View mSelfView;
 
     public SendingProgressView vSendingProgress;
     public View vProgressBg;
@@ -64,7 +65,7 @@ public class MyCourseViewHolder extends RecyclerView.ViewHolder {
         ButterKnife.bind(this, view);
 
         this.mController = controller;
-        setupClickableViews(view, controller);
+        this.mSelfView = view;
     }
 
     private void setupClickableViews(View selfView, final ControllerCourseItem controller) {
@@ -88,9 +89,12 @@ public class MyCourseViewHolder extends RecyclerView.ViewHolder {
         ivCourseCoverImage.setBackgroundColor(Color.parseColor(mCourseVO.getColorCode()));
         tvCourseTitle.setText(mCourseVO.getTitle());
         tvCategoryName.setText(mCourseVO.getCategoryName());
-        tvCategoryName.setTextColor(Color.parseColor(mCourseVO.getColorCode()));
+        // tvCategoryName.setTextColor(Color.parseColor(mCourseVO.getColorCode()));
         String durationAndAuthor = mCourseVO.getDurationInMinute().toString() + " mins - Admin Team";
         tvDuration.setText(durationAndAuthor);
+
+
+        setupClickableViews(mSelfView, mController);
 
 //        Context context = ivCourseCoverImage.getContext();
 //        int id = context

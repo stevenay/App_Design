@@ -32,6 +32,8 @@ import net.naylinaung.appdesign.R;
 import net.naylinaung.appdesign.adapters.MyCourseAdapter;
 import net.naylinaung.appdesign.animators.RecyclerItemAnimator;
 import net.naylinaung.appdesign.data.vos.CourseVO;
+import net.naylinaung.appdesign.fragments.FeaturedCourseListFragment;
+import net.naylinaung.appdesign.fragments.MyCourseListFragment;
 import net.naylinaung.appdesign.utils.ScreenUtils;
 import net.naylinaung.appdesign.utils.TransitionHelper;
 import net.naylinaung.appdesign.views.holders.MyCourseViewHolder;
@@ -51,9 +53,6 @@ public class MainActivity extends BaseActivity
     @BindView(R.id.content)
     CoordinatorLayout clContent;
 
-    @BindView(R.id.rvMyCourse)
-    RecyclerView rvMyCourse;
-
     @BindView(R.id.fab_search)
     FloatingActionButton fabSearch;
 
@@ -68,7 +67,6 @@ public class MainActivity extends BaseActivity
     private static final int ANIM_DURATION_TOOLBAR = 300;
     private static final int ANIM_DURATION_FAB = 400;
 
-    private MyCourseAdapter myCourseAdapter;
     private boolean pendingIntroAnimation;
 
     @Override
@@ -88,37 +86,25 @@ public class MainActivity extends BaseActivity
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
-        setupMyCourse();
-
         if (savedInstanceState == null) {
             pendingIntroAnimation = true;
             prepareIntroAnimation();
-        } else {
-            myCourseAdapter.updateItems(false, new ArrayList<CourseVO>());
         }
 
-    }
-
-    private void setupMyCourse() {
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this) {
+        fabSearch.setOnClickListener(new View.OnClickListener() {
             @Override
-            protected int getExtraLayoutSpace(RecyclerView.State state) {
-                return 300;
+            public void onClick(View view) {
+                Snackbar.make(view, "Sorry. Search on Attractions is not being supported yet.", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
             }
-        };
-        rvMyCourse.setLayoutManager(linearLayoutManager);
-
-        myCourseAdapter = new MyCourseAdapter(new ArrayList<CourseVO>(), this);
-        rvMyCourse.setAdapter(myCourseAdapter);
-
-        rvMyCourse.setItemAnimator(new RecyclerItemAnimator());
+        });
     }
 
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
         if (ACTION_SHOW_LOADING_ITEM.equals(intent.getAction())) {
-            showFeedLoadingItemDelayed();
+            // showFeedLoadingItemDelayed();
         }
     }
 
@@ -126,16 +112,6 @@ public class MainActivity extends BaseActivity
         fabSearch.setTranslationY(2 * getResources().getDimensionPixelOffset(R.dimen.btn_fab_size));
         toolbar.setTranslationY(-ACTION_BAR_SIZE);
         tvScreenTitle.setTranslationY(-ACTION_BAR_SIZE);
-    }
-
-    private void showFeedLoadingItemDelayed() {
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                rvMyCourse.smoothScrollToPosition(0);
-                myCourseAdapter.showLoadingView();
-            }
-        }, 500);
     }
 
     private void startIntroAnimation() {
@@ -171,7 +147,7 @@ public class MainActivity extends BaseActivity
                 .setDuration(ANIM_DURATION_FAB)
                 .start();
 
-        myCourseAdapter.updateItems(true, prepareSampleCourseList());
+        navigateToFeaturedCourseListFragment();
     }
 
     @Override
@@ -198,6 +174,7 @@ public class MainActivity extends BaseActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_profile) {
+            navigateToMyCourseListFragment();
             return true;
         }
 
@@ -208,44 +185,14 @@ public class MainActivity extends BaseActivity
         Snackbar.make(clContent, "Liked!", Snackbar.LENGTH_SHORT).show();
     }
 
-    public List<CourseVO> prepareSampleCourseList() {
-        List<CourseVO> courseList = new ArrayList<>();
-
-        CourseVO courseOne = new CourseVO();
-        courseOne.setTitle("UV ေရာင္ျခည္ကို ဘယ္လိုကာကြယ္မလဲ");
-        courseOne.setCategoryName("LifeStyle");
-        courseOne.setDurationInMinute(15);
-        courseOne.setAuthorName("Admin Team");
-        courseOne.setColorCode("#aed582");
-        courseOne.setImageUrl("co_terrace.png");
-        courseList.add(courseOne);
-
-        CourseVO courseTwo = new CourseVO();
-        courseTwo.setTitle("အားကစားကို နည္းမွန္လမ္းမွန္ ျပဳလုပ္နည္းမ်ား");
-        courseTwo.setCategoryName("Sports and Fitness");
-        courseTwo.setDurationInMinute(15);
-        courseTwo.setAuthorName("Admin Team");
-        courseTwo.setColorCode("#81c683");
-        courseOne.setImageUrl("co_runner.png");
-        courseList.add(courseTwo);
-
-        CourseVO courseThree = new CourseVO();
-        courseThree.setTitle("C# အသံုးျပဳ Console Application တစ္ခု ဘယ္လိုတည္ေဆာက္မလဲ");
-        courseThree.setCategoryName("Programming");
-        courseThree.setDurationInMinute(10);
-        courseThree.setAuthorName("Admin Team");
-        courseThree.setColorCode("#25c6da");
-        courseOne.setImageUrl("co_terrace.png");
-        courseList.add(courseThree);
-
-        return courseList;
-    }
-
     //region CourseItemListener
     @Override
     public void onTapCourse(CourseVO course) {
-        Intent intent = TodoListActivity.newIntent("Sample CourseID");
-        startActivity(intent);
+        Intent intent = RegisteredCourseDetailActivity.newIntent("SampleCourseName");
+
+        final Pair<View, String>[] pairs = TransitionHelper.createSafeTransitionParticipants(this, true);
+        ActivityOptionsCompat transitionActivityOptions = ActivityOptionsCompat.makeSceneTransitionAnimation(this, pairs);
+        startActivity(intent, transitionActivityOptions.toBundle());
     }
 
     @Override
@@ -272,6 +219,24 @@ public class MainActivity extends BaseActivity
         startActivity(intent, transitionActivityOptions.toBundle());
     }
     //endregion
+
+    //region Navigation
+    private void navigateToMyCourseListFragment() {
+        getSupportFragmentManager().beginTransaction()
+                .setCustomAnimations(R.anim.slide_up_fragment, R.anim.slide_up_out_fragment)
+                .replace(R.id.fl_container, MyCourseListFragment.newInstance())
+                .commit();
+    }
+
+    private void navigateToFeaturedCourseListFragment() {
+        getSupportFragmentManager().beginTransaction()
+                .setCustomAnimations(R.anim.slide_up_fragment, R.anim.slide_up_out_fragment)
+                .replace(R.id.fl_container, FeaturedCourseListFragment.newInstance())
+                .commit();
+    }
+
+    //endregion
+
 
     private void setupWindowAnimations() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {

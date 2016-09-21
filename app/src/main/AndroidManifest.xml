@@ -32,9 +32,20 @@
             android:name=".activities.PopupQuestionActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Base.NoActionBar.FullScreen" />
-        <activity android:name=".activities.TodoListActivity"
+        <activity
+            android:name=".activities.TodoListActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Base.NoActionBar.FullScreen" />
+        <activity
+            android:name=".activities.DiscussionDetailActivity"
+            android:label="Discussion Details"
+            android:screenOrientation="portrait"
+            android:parentActivityName=".activities.RegisteredCourseDetailActivity" />
+
+        <activity android:name=".activities.NewDiscussionActivity"
+            android:label="New Discussion"
+            android:screenOrientation="portrait"
+            android:parentActivityName=".activities.RegisteredCourseDetailActivity" />
     </application>
 
 </manifest>

@@ -60,7 +60,7 @@ public class MyCourseAdapter extends RecyclerView.Adapter<MyCourseViewHolder> {
 
         if (viewType == VIEW_TYPE_DEFAULT) {
 
-            View view = LayoutInflater.from(context).inflate(R.layout.view_item_my_course, parent, false);
+            View view = LayoutInflater.from(context).inflate(R.layout.view_item_featured_course, parent, false);
             MyCourseViewHolder cellCourseViewHolder = new MyCourseViewHolder(view, controllerCourseItem);
             // setupClickableViews(view, cellCourseViewHolder);
             return cellCourseViewHolder;

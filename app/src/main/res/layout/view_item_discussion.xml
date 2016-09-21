@@ -39,7 +39,7 @@
                 android:text="Nay LinAung"
                 android:textColor="@color/black_overlay"
                 android:textSize="@dimen/text_regular"
-                android:textStyle="bold" />
+                android:textStyle="normal" />
 
             <net.naylinaung.appdesign.components.MMTextView
                 android:id="@+id/tv_post_past_time"
@@ -113,7 +113,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/tv_chapter_brief"
-            android:layout_marginTop="@dimen/margin_small"
+            android:layout_marginTop="@dimen/margin_medium"
             android:paddingBottom="@dimen/margin_medium_2"
             android:paddingLeft="@dimen/margin_medium_2"
             android:paddingRight="@dimen/margin_medium_2"
@@ -136,11 +136,12 @@
                 android:layout_marginTop="@dimen/margin_smallest"
                 android:gravity="left"
                 android:text="Replies (11)"
-                android:textColor="@color/course_background_progress_bar"
+                android:textColor="@color/primary"
                 android:textSize="@dimen/text_small"
                 android:textStyle="bold"/>
 
             <LinearLayout
+                android:id="@+id/layout_like_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -166,7 +167,7 @@
                         android:layout_height="wrap_content"
                         android:text="Like (123)"
                         android:textSize="@dimen/text_small"
-                        android:textColor="@color/course_background_progress_bar"
+                        android:textColor="@color/primary"
                         android:textStyle="bold"/>
 
                     <TextView
