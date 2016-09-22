@@ -139,7 +139,7 @@ public class MainActivity extends BaseActivity
 //                .setDuration(ANIM_DURATION_FAB)
 //                .start();
 
-        navigateToMyCourseListFragment();
+        navigateToFeaturedCourseListFragment();
     }
 
     @Override

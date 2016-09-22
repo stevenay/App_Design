@@ -58,7 +58,7 @@ public class CourseModel extends BaseModel {
         mCourseList = courseList;
 
         //keep the data in persistent layer.
-        CourseVO.saveCourses(mCourseList);
+        //CourseVO.saveCourses(mCourseList);
 
         //broadcastAttractionLoadedWithEventBus();
         //broadcastAttractionLoadedWithLocalBroadcastManager();
@@ -68,7 +68,7 @@ public class CourseModel extends BaseModel {
 
     }
 
-    public String getRandomCourseImage() {
+//    public String getRandomCourseImage() {
 //        if (mAttractionList == null || mAttractionList.size() == 0) {
 //            return null;
 //        }
@@ -78,7 +78,7 @@ public class CourseModel extends BaseModel {
 //
 //        AttractionVO attraction = mAttractionList.get(randomInt);
 //        return MyanmarAttractionsConstants.IMAGE_ROOT_DIR + attraction.getImages()[attraction.getImages().length - 1];
-    }
+//    }
 
     private void broadcastCourseLoadedWithLocalBroadcastManager() {
         Intent intent = new Intent(BROADCAST_DATA_LOADED);

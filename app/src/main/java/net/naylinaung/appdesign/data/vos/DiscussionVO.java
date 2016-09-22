@@ -42,11 +42,11 @@ public class DiscussionVO {
     }
 
     public String getTitle() {
-        return title;
+        return discussionTitle;
     }
 
     public void setTitle(String title) {
-        this.title = title;
+        this.discussionTitle = title;
     }
 
     public String getDescription() {
@@ -57,12 +57,12 @@ public class DiscussionVO {
         this.description = description;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getUserId() {
+        return userId;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setUserId(String userName) {
+        this.userId = userName;
     }
 
     public String getPostPastTime() {

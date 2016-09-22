@@ -1,5 +1,9 @@
 package net.naylinaung.appdesign.views.holders;
 
+import android.graphics.Bitmap;
+import android.graphics.drawable.GradientDrawable;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v7.widget.RecyclerView;
 import android.content.Context;
 import android.graphics.Color;
@@ -8,8 +12,12 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextSwitcher;
 import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.BitmapImageViewTarget;
 
 import net.naylinaung.appdesign.R;
 import net.naylinaung.appdesign.components.SendingProgressView;
@@ -53,6 +61,9 @@ public class MyCourseViewHolder extends RecyclerView.ViewHolder {
     @BindView(R.id.tsLikesCounter)
     public TextSwitcher tsLikesCounter;
 
+    @BindView(R.id.layout_image_cover)
+    public LinearLayout layoutImageCover;
+
     private ControllerCourseItem mController;
     private CourseVO mCourseVO;
     private View mSelfView;
@@ -86,28 +97,31 @@ public class MyCourseViewHolder extends RecyclerView.ViewHolder {
 
     public void bindData(CourseVO courseVO) {
         mCourseVO = courseVO;
-        ivCourseCoverImage.setBackgroundColor(Color.parseColor(mCourseVO.getColorCode()));
+        // ivCourseCoverImage.setBackgroundColor(Color.parseColor(mCourseVO.getColorCode()));
+
+        GradientDrawable bgShape = (GradientDrawable) layoutImageCover.getBackground();
+        bgShape.setColor(Color.parseColor(mCourseVO.getColorCode()));
+
         tvCourseTitle.setText(mCourseVO.getTitle());
         tvCategoryName.setText(mCourseVO.getCategoryName());
         // tvCategoryName.setTextColor(Color.parseColor(mCourseVO.getColorCode()));
         String durationAndAuthor = mCourseVO.getDurationInMinute().toString() + " mins - Admin Team";
         tvDuration.setText(durationAndAuthor);
 
+        Glide.with(ivCourseCoverImage.getContext())
+                .load(R.drawable.uv_64)
+                .asBitmap().centerCrop()
+                .placeholder(R.drawable.misc_09_256)
+                .error(R.drawable.misc_09_256)
+                .into(ivCourseCoverImage);
 
         setupClickableViews(mSelfView, mController);
 
 //        Context context = ivCourseCoverImage.getContext();
 //        int id = context
-//                    .getResources()
-//                    .getIdentifier("drawable-nodpi/" + courseVO.getImageUrl(), null, context.getPackageName());
+//                .getResources()
+//                .getIdentifier("drawable-nodpi/" + courseVO.getImageUrl(), null, context.getPackageName());
 //        ivCourseCoverImage.setImageResource(id);
-
-//            Glide.with(ivCourseCoverImage.getContext())
-//                    .load(imageUrl)
-//                    .centerCrop()
-//                    .placeholder(R.drawable.stock_photo_placeholder)
-//                    .error(R.drawable.stock_photo_placeholder)
-//                    .into(ivAttraction);
     }
 
     public static class LoadingCourseItemViewHolder extends MyCourseViewHolder {
@@ -127,8 +141,11 @@ public class MyCourseViewHolder extends RecyclerView.ViewHolder {
 
     public interface ControllerCourseItem {
         void onTapCourse(CourseVO course);
+
         void onCommentsClick(View v, int position);
+
         void onMoreClick(View v, int position);
+
         void onProfileClick(View v);
 
         void onCoverImageClick();
