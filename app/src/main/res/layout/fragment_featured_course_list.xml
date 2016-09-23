@@ -48,7 +48,7 @@
                 android:layout_marginTop="@dimen/margin_medium_2"
                 android:paddingLeft="@dimen/margin_medium_2"
                 android:paddingRight="@dimen/margin_medium_2"
-                android:background="@color/text_white_ish"
+                android:background="@drawable/bg_rounded_corner_button"
                 android:textColor="#FF529DCB"
                 android:text="Go to Lesson" />
 
@@ -249,7 +249,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:visibility="gone">
 
             <TextView
                 android:layout_width="match_parent"
@@ -275,6 +276,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_medium"
             android:layout_marginLeft="@dimen/margin_medium"
             android:layout_marginRight="@dimen/margin_medium"
             android:padding="@dimen/margin_medium"
@@ -457,15 +459,32 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <TextView
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_medium_2"
-                android:layout_marginBottom="@dimen/margin_medium"
-                android:layout_marginLeft="@dimen/margin_medium_2"
-                android:text="အျခား နည္းပညာဆိုင္ရာ"
-                android:textColor="#FF828C9A"
-                android:textSize="@dimen/text_regular_2x" />
+                android:layout_marginTop="@dimen/margin_medium"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginLeft="@dimen/margin_medium_2"
+                    android:text="အျခား နည္းပညာဆိုင္ရာ"
+                    android:textColor="#FF828C9A"
+                    android:textSize="@dimen/text_regular_2x" />
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0"
+                    android:background="@color/transparent"
+                    android:textColor="#FF828C9A"
+                    android:text="See All"
+                    android:textAllCaps="false" />
+
+            </LinearLayout>
+
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/rv_technology_list"
@@ -663,18 +682,61 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_medium"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginLeft="@dimen/margin_medium_2"
+                    android:text="အျခား အခ်က္အျပဳတ္ဆိုင္ရာ"
+                    android:textColor="#FF828C9A"
+                    android:textSize="@dimen/text_regular_2x" />
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0"
+                    android:background="@color/transparent"
+                    android:textColor="#FF828C9A"
+                    android:text="See All"
+                    android:textAllCaps="false" />
+
+            </LinearLayout>
+
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_cooking_list"
+                android:layout_width="match_parent"
+                android:layout_height="316dp"
+                android:clipToPadding="false"
+                android:paddingLeft="@dimen/margin_medium"
+                android:layout_marginBottom="@dimen/margin_small"
+                android:layout_marginTop="@dimen/margin_medium" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_medium_2"
                 android:layout_marginBottom="@dimen/margin_medium"
                 android:layout_marginLeft="@dimen/margin_medium_2"
-                android:text="အျခား နည္းပညာဆိုင္ရာ"
+                android:text="စုစည္းမွုမ်ား"
                 android:textColor="#FF828C9A"
                 android:textSize="@dimen/text_regular_2x" />
 
             <android.support.v7.widget.RecyclerView
-                android:id="@+id/rv_cooking_list"
+                android:id="@+id/rv_collection_list"
                 android:layout_width="match_parent"
                 android:layout_height="316dp"
                 android:clipToPadding="false"

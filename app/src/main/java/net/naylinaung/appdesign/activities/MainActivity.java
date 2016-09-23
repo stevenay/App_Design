@@ -36,6 +36,8 @@ import net.naylinaung.appdesign.fragments.FeaturedCourseListFragment;
 import net.naylinaung.appdesign.fragments.MyCourseListFragment;
 import net.naylinaung.appdesign.utils.ScreenUtils;
 import net.naylinaung.appdesign.utils.TransitionHelper;
+import net.naylinaung.appdesign.views.holders.FeaturedCourseViewHolder;
+import net.naylinaung.appdesign.views.holders.FeaturedCourseViewHolder.ControllerFeaturedCourseItem;
 import net.naylinaung.appdesign.views.holders.MyCourseViewHolder;
 
 import java.util.ArrayList;
@@ -45,7 +47,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class MainActivity extends BaseActivity
-        implements MyCourseViewHolder.ControllerCourseItem {
+        implements MyCourseViewHolder.ControllerCourseItem,
+        ControllerFeaturedCourseItem {
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -139,7 +142,7 @@ public class MainActivity extends BaseActivity
 //                .setDuration(ANIM_DURATION_FAB)
 //                .start();
 
-        navigateToFeaturedCourseListFragment();
+        navigateToMyCourseListFragment();
     }
 
     @Override
@@ -237,4 +240,20 @@ public class MainActivity extends BaseActivity
             getWindow().setExitTransition(explode);
         }
     }
+
+    //region FeaturedCourseItemListener
+    @Override
+    public void onTapFeaturedCourse(CourseVO course) {
+        Intent intent = RegisteredCourseDetailActivity.newIntent("SampleCourseName");
+
+        final Pair<View, String>[] pairs = TransitionHelper.createSafeTransitionParticipants(this, true);
+        ActivityOptionsCompat transitionActivityOptions = ActivityOptionsCompat.makeSceneTransitionAnimation(this, pairs);
+        startActivity(intent, transitionActivityOptions.toBundle());
+    }
+
+    @Override
+    public void onFeaturedCoverImageClick() {
+
+    }
+    //endregion
 }

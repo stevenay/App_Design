@@ -1,6 +1,7 @@
 package net.naylinaung.appdesign.fragments;
 
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,10 +12,13 @@ import android.view.ViewGroup;
 
 import net.naylinaung.appdesign.R;
 import net.naylinaung.appdesign.adapters.ChapterAdapter;
+import net.naylinaung.appdesign.adapters.FeaturedCourseAdapter;
 import net.naylinaung.appdesign.adapters.MyCourseAdapter;
 import net.naylinaung.appdesign.animators.RecyclerItemAnimator;
 import net.naylinaung.appdesign.data.vos.CourseVO;
 import net.naylinaung.appdesign.views.holders.ChapterViewHolder;
+import net.naylinaung.appdesign.views.holders.DiscussionViewHolder;
+import net.naylinaung.appdesign.views.holders.FeaturedCourseViewHolder;
 import net.naylinaung.appdesign.views.holders.MyCourseViewHolder;
 
 import java.util.ArrayList;
@@ -34,8 +38,11 @@ public class FeaturedCourseListFragment extends Fragment {
     @BindView(R.id.rv_technology_list)
     RecyclerView rvTechnologyList;
 
-    private MyCourseAdapter myCourseAdapter;
-    private MyCourseViewHolder.ControllerCourseItem controllerCourseItem;
+    @BindView(R.id.rv_cooking_list)
+    RecyclerView rvCookingList;
+
+    private FeaturedCourseAdapter featuredCourseAdapter;
+    private FeaturedCourseViewHolder.ControllerFeaturedCourseItem controllerCourseItem;
 
     public static FeaturedCourseListFragment newInstance()
     {
@@ -55,19 +62,30 @@ public class FeaturedCourseListFragment extends Fragment {
         return view;
     }
 
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        controllerCourseItem = (FeaturedCourseViewHolder.ControllerFeaturedCourseItem) context;
+    }
+
     private void setupFeaturedCourse() {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(),
                 LinearLayoutManager.HORIZONTAL, false);
         rvLifestyleList.setLayoutManager(linearLayoutManager);
 
-        myCourseAdapter = new MyCourseAdapter(prepareSampleCourseList(), controllerCourseItem);
-        rvLifestyleList.setAdapter(myCourseAdapter);
+        featuredCourseAdapter = new FeaturedCourseAdapter(prepareSampleCourseList(), controllerCourseItem);
+        rvLifestyleList.setAdapter(featuredCourseAdapter);
         rvLifestyleList.setItemAnimator(new RecyclerItemAnimator());
 
         LinearLayoutManager linearLayoutManager1 = new LinearLayoutManager(getContext(),
                 LinearLayoutManager.HORIZONTAL, false);
         rvTechnologyList.setLayoutManager(linearLayoutManager1);
-        rvTechnologyList.setAdapter(myCourseAdapter);
+        rvTechnologyList.setAdapter(featuredCourseAdapter);
+
+        LinearLayoutManager linearLayoutManager2 = new LinearLayoutManager(getContext(),
+                LinearLayoutManager.HORIZONTAL, false);
+        rvCookingList.setLayoutManager(linearLayoutManager2);
+        rvCookingList.setAdapter(featuredCourseAdapter);
     }
 
     public List<CourseVO> prepareSampleCourseList() {

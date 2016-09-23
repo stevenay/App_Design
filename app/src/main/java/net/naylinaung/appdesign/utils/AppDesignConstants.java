@@ -46,4 +46,7 @@ public class AppDesignConstants {
     public static final String CUSTOMER_SUPPORT_EMAIL = "customer-support@myanmarattractions.com";
 
     public static final int DIALOG_BUTTON_LABEL_LIMIT = 15;
+
+
+
 }

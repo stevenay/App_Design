@@ -128,10 +128,6 @@ public class MyCourseAdapter extends RecyclerView.Adapter<MyCourseViewHolder> {
         }
     }
 
-    public void setControllerCourseItem(MyCourseViewHolder.ControllerCourseItem onCourseItemClickListener) {
-        this.controllerCourseItem = onCourseItemClickListener;
-    }
-
     public void showLoadingView() {
         showLoadingView = true;
         notifyItemChanged(0);
